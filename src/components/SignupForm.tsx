@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle, CheckCircle2, Mail, User, Calendar, GraduationCap } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Mail, User, Users, Calendar, GraduationCap } from 'lucide-react';
 import { validateEmail, calculateAllowedSemester, parseEmail } from '@/lib/validation';
 
 interface SignupFormData {
@@ -48,6 +48,7 @@ export function SignupForm() {
 
   const [errors, setErrors] = useState<Partial<SignupFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const validateForm = () => {
     const newErrors: Partial<SignupFormData> = {};
@@ -113,8 +114,9 @@ export function SignupForm() {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Success - would redirect or show success message
+      // Success - show success state
       console.log('Signup successful:', formData);
+      setIsSuccess(true);
       
     } catch (error) {
       console.error('Signup failed:', error);
@@ -125,6 +127,50 @@ export function SignupForm() {
 
   const emailValidation = validateEmail(formData.email);
   const parsedEmail = emailValidation.isValid ? emailValidation.data : null;
+
+  // Show success page if signup completed
+  if (isSuccess) {
+    return (
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardContent className="p-8 text-center space-y-6">
+          <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle2 className="w-8 h-8 text-success" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-success">Welcome to RVCE Connect!</h2>
+            <p className="text-muted-foreground">
+              Your account has been created successfully. You've been automatically added to:
+            </p>
+          </div>
+          <div className="space-y-3 text-left max-w-md mx-auto">
+            <div className="flex items-center gap-3 p-3 bg-primary/5 rounded-lg">
+              <Users className="w-5 h-5 text-primary" />
+              <span className="font-medium">{parsedEmail?.branch.toUpperCase()} Branch Community</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-accent/5 rounded-lg">
+              <GraduationCap className="w-5 h-5 text-accent" />
+              <span className="font-medium">Semester {formData.currentSemester} Group</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-secondary/5 rounded-lg">
+              <User className="w-5 h-5 text-secondary" />
+              <span className="font-medium">Section {formData.section}</span>
+            </div>
+          </div>
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => {
+              // In a real app, this would redirect to dashboard
+              setIsSuccess(false);
+              window.location.reload();
+            }}
+          >
+            Continue to Dashboard
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
