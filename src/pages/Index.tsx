@@ -1,14 +1,29 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { HeroSection } from '@/components/HeroSection';
+import { SignupForm } from '@/components/SignupForm';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+  const [showSignup, setShowSignup] = useState(false);
+
+  if (showSignup) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-8">
+        <div className="container mx-auto px-4">
+          <div className="mb-8 text-center">
+            <button 
+              onClick={() => setShowSignup(false)}
+              className="text-primary hover:text-primary-glow transition-colors"
+            >
+              ← Back to Home
+            </button>
+          </div>
+          <SignupForm />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <HeroSection onGetStarted={() => setShowSignup(true)} />;
 };
 
 export default Index;
