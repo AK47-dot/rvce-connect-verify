@@ -160,9 +160,7 @@ export function SignupForm() {
             variant="hero" 
             size="lg" 
             onClick={() => {
-              // In a real app, this would redirect to dashboard
-              setIsSuccess(false);
-              window.location.reload();
+              window.location.href = '/dashboard';
             }}
           >
             Continue to Dashboard
