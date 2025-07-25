@@ -180,12 +180,6 @@ export function SignupForm() {
                 {errors.email}
               </div>
             )}
-            {emailValidation.isValid && parsedEmail && (
-              <div className="flex items-center gap-2 text-sm text-success">
-                <CheckCircle2 className="w-4 h-4" />
-                Detected: {parsedEmail.firstName} {parsedEmail.lastName}, {parsedEmail.branch.toUpperCase()}, 20{parsedEmail.year}
-              </div>
-            )}
           </div>
 
           {/* Year and Month of Joining */}
