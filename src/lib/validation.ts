@@ -24,14 +24,14 @@ export function validateEmail(email: string): EmailValidationResult {
   // Extract the local part (before @)
   const localPart = email.split('@')[0];
   
-  // Updated regex to handle + or . as separators
-  const emailRegex = /^([a-z]+)[+.]([a-z]+)\.([a-z]{2,3})(\d{2})$/i;
+  // Updated regex to handle format: firstnamelastname.branchYY
+  const emailRegex = /^([a-z]+)([a-z]+)\.([a-z]{2,3})(\d{2})$/i;
   const match = localPart.match(emailRegex);
 
   if (!match) {
     return { 
       isValid: false, 
-      error: 'Invalid email format. Expected: firstname+lastname.branchYY@rvce.edu.in' 
+      error: 'Invalid email format. Expected: firstnamelastname.branchYY@rvce.edu.in' 
     };
   }
 

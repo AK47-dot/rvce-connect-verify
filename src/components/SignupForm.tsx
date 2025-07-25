@@ -171,7 +171,7 @@ export function SignupForm() {
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="firstname+lastname.branchYY@rvce.edu.in"
+              placeholder="firstnamelastname.branchYY@rvce.edu.in"
               className={errors.email ? 'border-destructive' : emailValidation.isValid ? 'border-success' : ''}
             />
             {errors.email && (
